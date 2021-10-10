@@ -4,6 +4,7 @@
    [challenge.styles :as styles]
    [challenge.subs :as subs]
    [challenge.components.all :as available-components]
+   [challenge.components.grid.main :as grid]
    [challenge.utils :as utils]
    [clojure.string :as string]))
 
@@ -32,6 +33,18 @@
 ;;                 [{:component "64f8e186-a2c3-4aed-bac2-147a654d54aa", :columns 12}]
 ;;                 [{:component "mobile1", :columns 12}]
 ;;                 [{:component "eef8a50d-7ac8-43ef-9592-5c48a5446c56", :columns 12}]]}})
+
+
+(defn render-layout
+  "Processes the layout object and renders all components"
+  ;; [layouts layout-name components-instances component-valid-id]
+  [& {:keys [layouts layout-name components-instances component-valid-id]}]
+  (let [{{rows :rows} layout-name} layouts]
+    (->> rows
+         (map (fn [row] (map :component row)))
+         flatten
+         (filter string?)
+         (into #{}))))
 
 
 
@@ -87,16 +100,6 @@
 ;; (def component-valid-id (get-ids-from-layouts lprueba :mobile))
 
 
-(defn row [{:keys [name]} & columns]
-  [:div
-   [:p "row: " name]
-   [:div columns]])
-
-(defn column [{:keys [name width]} & children]
-  [:div
-   [:p "column:" name]
-   [:p "column:" name]
-   [:div children]])
 
 
 (defn main-panel []
@@ -104,7 +107,12 @@
         components (re-frame/subscribe [::subs/components])
         layout (re-frame/subscribe [::subs/layout])
         component-valid-id (get-ids-from-layouts @layout layout-name)
-        components-instances (get-components-instances @components type-key-to-component component-valid-id debug-components)]
+        components-instances (get-components-instances @components type-key-to-component component-valid-id debug-components)
+        layout-output (render-layout
+                       :layouts @layout
+                       :layout-name layout-name
+                       :components-instances components-instances
+                       :component-valid-id component-valid-id)]
 
     ;; (utils/log @layout)
 
@@ -127,10 +135,17 @@
 
 
 
-    ;;  [paparulo "diego"
-    ;;   [:p {:style {:background-color :red :color :white :padding "20px"}} "un hijo"]]
+    ;;  [grid/row {:name "primera"}
+    ;;   [grid/column {:name "col1" :width 3 :key 1}]
+    ;;   [grid/column {:name "col2" :width 9 :key 2}]]
+
+    ;;  [grid/row {:name "segunda"}
+    ;;   [grid/column {:name "col1" :width 4}]
+    ;;   [grid/column {:name "col2" :width 4}]
+    ;;   [grid/column {:name "col3" :width 4}]]
 
 
+     layout-output
 
     ;;  lslsl
      ]))
