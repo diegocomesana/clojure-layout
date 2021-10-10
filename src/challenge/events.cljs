@@ -15,7 +15,7 @@
 (re-frame/reg-event-db
  ::on-fetch-data-success
  (fn [db [_ result]]
-   (println "putos componentes: " (:components result))
+  ;;  (println "putos componentes: " (:components result))
    (assoc db :components (:components result) :layout (:layout result))))
 
 

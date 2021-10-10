@@ -7,7 +7,7 @@
 
 (defclass style
   []
-  {:color :white :padding "20px" :whidth "100%" :background-color :pink})
+  {:color :white :padding "20px" :whidth "100%" :background-color :orange})
 
 
 (defn component
