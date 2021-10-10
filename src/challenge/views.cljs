@@ -10,12 +10,10 @@
 
 ;; https://day8.github.io/re-frame/EffectfulHandlers/
 
-
-(def type-key-to-component {:hero available-components/hero
-                            :header available-components/header})
-
 (def layout-name :desktop)
 (def debug-components true)
+(def type-key-to-component {:hero available-components/hero
+                            :header available-components/header})
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])
@@ -30,7 +28,7 @@
     [:div
      [:h1
       {:class (styles/level1)}
-      "Hello from " @name]
+      "Clojure " @name]
      (utils/render-layout
       {:layouts @layout
        :layout-name layout-name

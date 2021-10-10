@@ -10,9 +10,8 @@
 
 
 (defn component
-  [[image link]]
+  [{:keys [image link]}]
   [:div {:class (style)}
-   [:p image]
    [:h2 "HERO"]
-   [:p "image: " (:src image)]
-   [:p "link: " (:href link)]])
+   [:p {:key "image"} "image: " (:src image)]
+   [:p {:key "link"} "link: " (:href link)]])

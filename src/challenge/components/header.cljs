@@ -11,9 +11,9 @@
 
 
 (defn component
-  [[logo links]]
+  [{:keys [logo links]}]
   [:div {:class (style)}
    [:h2 "HEADER"]
-   [:p "logo: " logo]
-  ;;  [:p "links: " (str links)]
-   ])
+   [:img {:key "logo" :src (:href logo)}]
+   [:ul
+    (map (fn [{:keys [text href]}] [:li {:key href} [:a {:href href} text]]) links)]])

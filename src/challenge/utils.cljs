@@ -33,19 +33,17 @@
                                     keys
                                     second)
                       comp (type-key type-key-to-component)
-                      {data type-key} component-data
-                      props (vals data)]
+                      {data type-key} component-data]
                   (when (and comp (contains? component-valid-id id))
                     (when debug
                       (println (str "---------------- COMPONENT " (string/upper-case (str type-key)) " ----------------"))
                 ;;  (println "component-data: " component-data)
                       (println "type-key: " type-key)
-                      (println "props: " props)
-                      (println "props-type: " (type props)))
+                      (println "data: " data))
 
                     {id {:id id
                          :type-key type-key
-                         :output (comp props)}}))))
+                         :output (comp data)}}))))
          (filter some?)
          (into {}))))
 
@@ -59,7 +57,7 @@
          (map-indexed (fn [index row]
                         [row-component {:key index :name (str "row" (inc index)) :debug debug}
                          (map-indexed (fn [index {:keys [component columns]}]
-                                        [column-component {:key index :name (str "col" (inc index)) :width columns :debug debug}
+                                        [column-component {:key (str index component) :name (str "col" (inc index)) :width columns :debug debug}
                                          (let [output (->> component
                                                            (get components-instances)
                                                            :output)]
