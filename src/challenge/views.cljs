@@ -87,6 +87,16 @@
 ;; (def component-valid-id (get-ids-from-layouts lprueba :mobile))
 
 
+(defn row [{:keys [name]} & columns]
+  [:div
+   [:p "row: " name]
+   [:div columns]])
+
+(defn column [{:keys [name width]} & children]
+  [:div
+   [:p "column:" name]
+   [:p "column:" name]
+   [:div children]])
 
 
 (defn main-panel []
@@ -113,6 +123,13 @@
     ;;  (->> "ed6ca899-01bc-4d99-b26d-6672e3ab8bd4"
     ;;       (get components-instances)
     ;;       :output)
+
+
+
+
+    ;;  [paparulo "diego"
+    ;;   [:p {:style {:background-color :red :color :white :padding "20px"}} "un hijo"]]
+
 
 
     ;;  lslsl
